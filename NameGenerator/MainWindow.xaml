@@ -5,8 +5,83 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NameGenerator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Name Generator" Height="500" Width="800" MinHeight="500" MinWidth="500" Background="AliceBlue">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="20px"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0" Margin="10" VerticalAlignment="Center"  HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="SurnameLoadButton" Content="Betöltés" Grid.Column="0" Click="NamesLoader"/>
+            <Label Grid.Column="1">
+                <Label.Content>
+                    <Binding ElementName="SurnamesListBox" Path="Items.Count"/>
+                </Label.Content>
+                <Label.ContentStringFormat>
+                    Családnevek: {0}
+                </Label.ContentStringFormat>
+            </Label>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1" Margin="10" VerticalAlignment="Center"  HorizontalAlignment="Stretch">   
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="ForenameLoadButton" Content="Betöltés" Grid.Column="0" Click="NamesLoader"/>
+            <Label Grid.Column="1">
+                <Label.Content>
+                    <Binding ElementName="ForenamesListBox" Path="Items.Count"/>
+                </Label.Content>
+                <Label.ContentStringFormat>
+                    Keresztnév: {0}
+                </Label.ContentStringFormat>
+            </Label>
+        </Grid>
+
+        <ListBox x:Name="SurnamesListBox" Grid.Row="1" Grid.Column="0" Margin="10"/>
+        <ListBox x:Name="ForenamesListBox" Grid.Row="1" Grid.Column="2" Margin="10"/>
+        <ListBox x:Name="NamesListBox" Grid.Row="2" Grid.Column="0" Margin="10"/>
+        <!-- Az -->
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border>
+                <StackPanel>
+                    <Label Content="Utónevek száma: "/>
+                    <RadioButton Content="Egy"/>
+                    <RadioButton Content="Kettő"/>
+                    <Label Content="Létrehozandó nevek száma: "/>
+                    <Label Content="0"/>
+                </StackPanel>
+            </Border>
+            <Button x:Name="a" Content="Csoki" Grid.Row="1" Margin="4"/>
+            <Button x:Name="b" Content="Csoki" Grid.Row="2" Margin="4"/>
+            <Button x:Name="c" Content="Csoki" Grid.Row="3" Margin="4"/>
+            <Button x:Name="d" Content="Csoki" Grid.Row="4" Margin="4"/>
+        </Grid>
+        <StatusBar Grid.Row="3" Grid.ColumnSpan="2">
+            <StatusBarItem Content="Generált nevek száma"/>
+            <TextBlock Text="{Binding ElementName=NamesListBox, Path=Items.Count}"/>
+            <Separator Margin="10,0"/>
+            <StatusBarItem x:Name="StatusBarSort"/>
+        </StatusBar>
     </Grid>
 </Window>
