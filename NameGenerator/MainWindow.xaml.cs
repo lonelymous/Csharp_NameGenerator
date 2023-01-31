@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
 
 namespace NameGenerator
 {
@@ -13,8 +14,8 @@ namespace NameGenerator
         private OpenFileDialog _openFileDialog;
         private SaveFileDialog _saveFileDialog;
 
-        private List<string> _surnames;
-        private List<string> _forenames;
+        private ObservableCollection<string> _surnames;
+        private ObservableCollection<string> _forenames;
 
         public MainWindow()
         {
@@ -78,9 +79,10 @@ namespace NameGenerator
             }
         }
 
-        private List<string> LoadNamesToList(List<string> parent, List<string> names)
+        private ObservableCollection<string> LoadNamesToList(ObservableCollection<string> parent, List<string> names)
         {
-            parent = parent ?? new List<string>();
+            // Add or Overwrite
+            parent = parent ?? new ObservableCollection<string>();
             foreach (string name in names)
             {
                 parent.Add(name);
