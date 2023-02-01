@@ -73,12 +73,12 @@
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Létrehozandó nevek száma"/>
                         <Border Background="Gray" Padding="1">
-                            <TextBox x:Name="txtbox_NameCount" Background="GreenYellow" HorizontalContentAlignment="Center" Width="30" Height="30" FontStretch="Condensed" Text="{Binding Value, ElementName=slider_nameCount, Mode=TwoWay, FallbackValue=0}" TextAlignment="Center"/>
+                            <TextBox x:Name="txtbox_NameCount" Background="GreenYellow" HorizontalContentAlignment="Center" Width="30" Height="30" FontStretch="Condensed" Text="{Binding Value, ElementName=sliderNameCount, Mode=TwoWay, FallbackValue=0}" TextAlignment="Center"/>
                         </Border>
                     </StackPanel>
                     <DockPanel>
                         <Label DockPanel.Dock="Left" Width="20" Content="0"/>
-                        <Label x:Name="lblMaxNameCount"  DockPanel.Dock="Right"/>
+                        <Label x:Name="lblMaxNameCount" DockPanel.Dock="Right"/>
                         <Slider x:Name="sliderNameCount" Minimum="0" Maximum="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding Text, ElementName=txtbox_NameCount, Mode=TwoWay}"/>
                         <!--<Slider x:Name="sliderNameCount" Minimum="0" Maximum="{Binding Value, ElementName=MaxNameCount}" VerticalAlignment="Center" HorizontalAlignment="Stretch" TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding Text, ElementName=txtbox_NameCount, Mode=TwoWay}"/>-->
                     </DockPanel>
