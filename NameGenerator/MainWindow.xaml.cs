@@ -82,7 +82,6 @@ namespace NameGenerator
             int b = _forenames.Count;
             _maxNameCount = Convert.ToUInt32(a < b ? a : b);
             // I have to use this, because if I use the commented xaml code it gets 10 for some reason.
-            Console.WriteLine(MaxNameCount);
             sliderNameCount.Maximum = MaxNameCount;
         }
         private void JumpToTheEndOfNameList()
@@ -182,10 +181,8 @@ namespace NameGenerator
                 {
                     surname = _surnames[r.Next(0, _surnames.Count)];
                     forename = _forenames[r.Next(0, _forenames.Count)];
-                    Console.WriteLine(_forenames.Count);
                     _surnames.Remove(surname);
                     _forenames.Remove(forename);
-                    Console.WriteLine(_forenames.Count);
                     if (!(bool)rbSelectionOne.IsChecked)
                     {
                         middlename = _forenames[r.Next(0, _forenames.Count)];
@@ -212,7 +209,31 @@ namespace NameGenerator
         }
         private void SaveNamesButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (_saveFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    if (Path.GetExtension(_saveFileDialog.FileName) == ".csv")
+                    {
+                        List<string> temp = new List<string>();
+                        temp = _names.ToList();
+                        for (int i = 0; i < temp.Count(); i++)
+                        {
+                            temp[i] = temp[i].Replace(" ", ";");
+                        }
+                        File.WriteAllLines(_saveFileDialog.FileName, temp);
+                    }
+                    else
+                    {
+                        File.WriteAllLines(_saveFileDialog.FileName, _names);
+                    }
+                    MessageBox.Show("Sikeres mentés!", "Mentés", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch
+                {
+                    MessageBox.Show("Sikertelen mentés!");
+                }
+            }
         }
     }
 }
