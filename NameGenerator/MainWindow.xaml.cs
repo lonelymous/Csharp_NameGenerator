@@ -72,6 +72,7 @@ namespace NameGenerator
         {
             SurnamesListBox.ItemsSource = _surnames;
             ForenamesListBox.ItemsSource = _forenames;
+            NamesListBox.ItemsSource = _names;
             SetMaxNameCount();
             JumpToTheEndOfNameList();
         }
@@ -91,26 +92,6 @@ namespace NameGenerator
             SurnamesListBox.ScrollIntoView(SurnamesListBox.Items.CurrentItem);
             ForenamesListBox.ScrollIntoView(ForenamesListBox.Items.CurrentItem);
             NamesListBox.ScrollIntoView(NamesListBox.Items.CurrentItem);
-        }
-        private void GenerateNames(bool middleName)
-        {
-            Random r = new Random();
-            int count = Convert.ToInt32(sliderNameCount.Value);
-
-            if (middleName)
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    _names.Add($"{_forenames[r.Next(0, _forenames.Count)]} {_surnames[r.Next(0, _surnames.Count)]} {_surnames[r.Next(0, _surnames.Count)]}");
-                }
-            }
-            else
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    _names.Add($"{_forenames[r.Next(0, _forenames.Count)]} {_surnames[r.Next(0, _surnames.Count)]}");
-                }
-            }
         }
         private void NamesLoader(object sender, RoutedEventArgs e)
         {
@@ -156,14 +137,15 @@ namespace NameGenerator
                         _forenames.RemoveAt(ForenamesListBox.SelectedIndex);
                         break;
                     case "NamesListBox":
-                        throw new NotImplementedException();
+                        _names.RemoveAt(NamesListBox.SelectedIndex);
+                        break;
                     default:
-                        throw new Exception("Unhandled source");
+                        throw new Exception("Nincs lekezelve ez a forrás.");
                 }
             }
             catch (ArgumentOutOfRangeException)
             {
-                MessageBox.Show("Üres a lista nem tudsz benne törölni", "Error in NameDeleter", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Üres a lista nem tudsz benne törölni.", "Error in NameDeleter", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
@@ -181,8 +163,41 @@ namespace NameGenerator
         }
         private void GenerateNamesButton_Click(object sender, RoutedEventArgs e)
         {
-            GenerateNames(!(bool)rbSelectionOne.IsChecked);
-            ReloadLists();
+            try
+            {
+                int count = Convert.ToInt32(sliderNameCount.Value);
+
+                if (count <= 0)
+                {
+                    throw new Exception("0 vagy annál kevesebb nevet nem tudsz generálni.");
+                }
+
+                Random r = new Random();
+                string surname = String.Empty;
+                string forename = String.Empty;
+                string middlename = null;
+                
+                for (int i = 0; i < count; i++)
+                {
+                    forename = _forenames[r.Next(0, _forenames.Count)];
+                    if (!(bool)rbSelectionOne.IsChecked)
+                    {
+                        do
+                        {
+                            middlename = _forenames[r.Next(0, _forenames.Count)];
+                        } while (middlename == forename);
+                    }
+                    _names.Add($"{_surnames[r.Next(0, _surnames.Count)]} {forename}{(middlename == null ? "": " " + middlename)}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error in GenerateNames", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                ReloadLists();
+            }
         }
         private void SortNamesButton_Click(object sender, RoutedEventArgs e)
         {
