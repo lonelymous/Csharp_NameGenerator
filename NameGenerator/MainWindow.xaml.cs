@@ -82,6 +82,7 @@ namespace NameGenerator
             int b = _forenames.Count;
             _maxNameCount = Convert.ToUInt32(a < b ? a : b);
             // I have to use this, because if I use the commented xaml code it gets 10 for some reason.
+            Console.WriteLine(MaxNameCount);
             sliderNameCount.Maximum = MaxNameCount;
         }
         private void JumpToTheEndOfNameList()
@@ -179,15 +180,18 @@ namespace NameGenerator
                 
                 for (int i = 0; i < count; i++)
                 {
+                    surname = _surnames[r.Next(0, _surnames.Count)];
                     forename = _forenames[r.Next(0, _forenames.Count)];
+                    Console.WriteLine(_forenames.Count);
+                    _surnames.Remove(surname);
+                    _forenames.Remove(forename);
+                    Console.WriteLine(_forenames.Count);
                     if (!(bool)rbSelectionOne.IsChecked)
                     {
-                        do
-                        {
-                            middlename = _forenames[r.Next(0, _forenames.Count)];
-                        } while (middlename == forename);
+                        middlename = _forenames[r.Next(0, _forenames.Count)];
+                        _forenames.Remove(middlename);
                     }
-                    _names.Add($"{_surnames[r.Next(0, _surnames.Count)]} {forename}{(middlename == null ? "": " " + middlename)}");
+                    _names.Add($"{surname} {forename}{(middlename == null ? "": " " + middlename)}");
                 }
             }
             catch (Exception ex)
