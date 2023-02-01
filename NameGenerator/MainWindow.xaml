@@ -93,9 +93,7 @@
             <StatusBarItem Content="Generált nevek száma"/>
             <TextBlock Text="{Binding ElementName=NamesListBox, Path=Items.Count}"/>
             <Separator Margin="10,0"/>
-            <StatusBarItem>
-                <Label x:Name="StatusBarSort"/>
-            </StatusBarItem>
+            <StatusBarItem x:Name="StatusBarSort"/>
         </StatusBar>
     </Grid>
 </Window>

@@ -1,19 +1,17 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Collections.ObjectModel;
-using System.Xml.Linq;
-using System.Security.Cryptography;
-using System.Linq;
+using System.Windows.Input;
 
 namespace NameGenerator
 {
     public partial class MainWindow : Window
     {
-
         private OpenFileDialog _openFileDialog;
         private SaveFileDialog _saveFileDialog;
 
@@ -75,6 +73,7 @@ namespace NameGenerator
             NamesListBox.ItemsSource = _names;
             SetMaxNameCount();
             JumpToTheEndOfNameList();
+            StatusBarSort.Content = "";
         }
         private void SetMaxNameCount() 
         {
@@ -123,7 +122,7 @@ namespace NameGenerator
                 ReloadLists();
             }
         }
-        private void NameDeleter(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void NameDeleter(object sender, MouseButtonEventArgs e)
         {
             var source = e.Source as ListBox;
             try
@@ -159,7 +158,7 @@ namespace NameGenerator
         private void DeleteNamesButton_Click(object sender, RoutedEventArgs e)
         {
             _names.Clear();
-            NamesListBox.Items.Clear();
+            ReloadLists();
         }
         private void GenerateNamesButton_Click(object sender, RoutedEventArgs e)
         {
@@ -205,6 +204,7 @@ namespace NameGenerator
             ObservableCollection<string> temp = new ObservableCollection<string>(_names.OrderBy(p => p));
             _names.Clear();
             _names = temp;
+            ReloadLists();
             StatusBarSort.Content = "Rendezett névsor!";
         }
         private void SaveNamesButton_Click(object sender, RoutedEventArgs e)
