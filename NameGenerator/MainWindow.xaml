@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NameGenerator"
         mc:Ignorable="d"
-        Title="Name Generator" Height="500" Width="800" MinHeight="500" MinWidth="500" Background="AliceBlue">
+        Title="Name Generator" Height="600" Width="800" MinHeight="500" MinWidth="500" Background="AliceBlue">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -13,8 +13,8 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition Height="20px"/>
         </Grid.RowDefinitions>
 
@@ -33,7 +33,6 @@
                 </Label.ContentStringFormat>
             </Label>
         </Grid>
-
         <Grid Grid.Row="0" Grid.Column="1" Margin="10" VerticalAlignment="Center"  HorizontalAlignment="Stretch">   
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -46,42 +45,57 @@
                     <Binding ElementName="ForenamesListBox" Path="Items.Count"/>
                 </Label.Content>
                 <Label.ContentStringFormat>
-                    Keresztnév: {0}
+                    Utónevek: {0}
                 </Label.ContentStringFormat>
             </Label>
         </Grid>
 
-        <ListBox x:Name="SurnamesListBox" Grid.Row="1" Grid.Column="0" Margin="10"/>
-        <ListBox x:Name="ForenamesListBox" Grid.Row="1" Grid.Column="2" Margin="10"/>
-        <ListBox x:Name="NamesListBox" Grid.Row="2" Grid.Column="0" Margin="10"/>
+        <ListBox x:Name="SurnamesListBox" Grid.Row="1" Grid.Column="0" Margin="10" MouseDoubleClick="NameDeleter" Background="Bisque"/>
+        <ListBox x:Name="ForenamesListBox" Grid.Row="1" Grid.Column="2" Margin="10" MouseDoubleClick="NameDeleter" Background="Bisque"/>
+        <ListBox x:Name="NamesListBox" Grid.Row="2" Grid.Column="0" Margin="10" MouseDoubleClick="NameDeleter" Background="Orchid"/>
         <!-- Az -->
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*" MinHeight="100px"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Border>
+            <!-- Stolen code from Suketti -->
+            <Border Background="LightSeaGreen" CornerRadius="10" Padding="5" Grid.Row="0" Margin="0 5">
                 <StackPanel>
-                    <Label Content="Utónevek száma: "/>
-                    <RadioButton Content="Egy"/>
-                    <RadioButton Content="Kettő"/>
-                    <Label Content="Létrehozandó nevek száma: "/>
-                    <Label Content="0"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Utónevek száma:"/>
+                        <RadioButton VerticalAlignment="Center" x:Name="rbSelectionOne" Content="Egy" IsChecked="True"/>
+                        <RadioButton VerticalAlignment="Center" x:Name="rbSelectionTwo" Content="Kettő"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Létrehozandó nevek száma"/>
+                        <Border Background="Gray" Padding="1">
+                            <TextBox x:Name="txtbox_NameCount" Background="GreenYellow" HorizontalContentAlignment="Center" Width="30" Height="30" FontStretch="Condensed" Text="{Binding Value, ElementName=slider_nameCount, Mode=TwoWay, FallbackValue=0}" TextAlignment="Center"/>
+                        </Border>
+                    </StackPanel>
+                    <DockPanel>
+                        <Label DockPanel.Dock="Left" Width="20" Content="0"/>
+                        <Label x:Name="lblMaxNameCount"  DockPanel.Dock="Right"/>
+                        <Slider x:Name="sliderNameCount" Minimum="0" Maximum="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding Text, ElementName=txtbox_NameCount, Mode=TwoWay}"/>
+                        <!--<Slider x:Name="sliderNameCount" Minimum="0" Maximum="{Binding Value, ElementName=MaxNameCount}" VerticalAlignment="Center" HorizontalAlignment="Stretch" TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding Text, ElementName=txtbox_NameCount, Mode=TwoWay}"/>-->
+                    </DockPanel>
                 </StackPanel>
             </Border>
-            <Button x:Name="a" Content="Csoki" Grid.Row="1" Margin="4"/>
-            <Button x:Name="b" Content="Csoki" Grid.Row="2" Margin="4"/>
-            <Button x:Name="c" Content="Csoki" Grid.Row="3" Margin="4"/>
-            <Button x:Name="d" Content="Csoki" Grid.Row="4" Margin="4"/>
+            <Button Content="Nevek generálása" Grid.Row="1" Margin="2" Click="GenerateNamesButton_Click"/>
+            <Button Content="Generált nevek törlése" Grid.Row="2" Margin="2" Click="DeleteNamesButton_Click"/>
+            <Button Content="Nevek rendezése" Grid.Row="3" Margin="2" Click="SortNamesButton_Click"/>
+            <Button Content="Nevek mentése" Grid.Row="4" Margin="2" Click="SaveNamesButton_Click"/>
         </Grid>
         <StatusBar Grid.Row="3" Grid.ColumnSpan="2">
             <StatusBarItem Content="Generált nevek száma"/>
             <TextBlock Text="{Binding ElementName=NamesListBox, Path=Items.Count}"/>
             <Separator Margin="10,0"/>
-            <StatusBarItem x:Name="StatusBarSort"/>
+            <StatusBarItem>
+                <Label x:Name="StatusBarSort"/>
+            </StatusBarItem>
         </StatusBar>
     </Grid>
 </Window>
