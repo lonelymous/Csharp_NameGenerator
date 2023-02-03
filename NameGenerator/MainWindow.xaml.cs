@@ -84,7 +84,7 @@ namespace NameGenerator
             int a = _surnames.Count;
             int b = _forenames.Count;
             _maxNameCount = Convert.ToDouble(a < b ? a : b);
-            // I have to use this, because if I use the commented xaml code it gets 10 for some reason.
+            // I have to use this, because if I use the commented xaml code it gets 10 for some reason.   
             //sliderNameCount.Maximum = MaxNameCount;
         }
         private void JumpToTheEndOfNameList()

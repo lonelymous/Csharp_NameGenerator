@@ -86,7 +86,7 @@
                                 HorizontalAlignment="Stretch" 
                                 TickFrequency="1" 
                                 IsSnapToTickEnabled="True" 
-                                Value="{Binding Text, ElementName=txtbox_NameCount, Mode=TwoWay}"/>-->
+                                Value="{Binding Text, ElementName=txtbox_NameCount, Mode=TwoWay}"/>-->   
                         <Slider x:Name="sliderNameCount" 
                         Minimum="0" Maximum="{Binding ElementName=MaxNameCount}" 
                         VerticalAlignment="Center" HorizontalAlignment="Stretch" 
