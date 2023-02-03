@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Runtime.InteropServices;
 
 namespace NameGenerator
 {
@@ -19,12 +20,15 @@ namespace NameGenerator
         private ObservableCollection<string> _forenames;
         private ObservableCollection<string> _names;
 
-        private uint _maxNameCount;
-        public uint MaxNameCount { get => _maxNameCount;}
+        private double _maxNameCount;
+        public double MaxNameCount { get => _maxNameCount;}
 
         public MainWindow()
         {
+            
+            //F9
             InitializeComponent();
+            Console.WriteLine($"slider maximum {sliderNameCount.Maximum}");
             _surnames = new ObservableCollection<string>();
             _forenames = new ObservableCollection<string>();
             _names = new ObservableCollection<string>();
@@ -79,9 +83,9 @@ namespace NameGenerator
         {
             int a = _surnames.Count;
             int b = _forenames.Count;
-            _maxNameCount = Convert.ToUInt32(a < b ? a : b);
+            _maxNameCount = Convert.ToDouble(a < b ? a : b);
             // I have to use this, because if I use the commented xaml code it gets 10 for some reason.
-            sliderNameCount.Maximum = MaxNameCount;
+            //sliderNameCount.Maximum = MaxNameCount;
         }
         private void JumpToTheEndOfNameList()
         {

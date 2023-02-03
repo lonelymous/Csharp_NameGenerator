@@ -79,8 +79,18 @@
                     <DockPanel>
                         <Label DockPanel.Dock="Left" Width="20" Content="0"/>
                         <Label x:Name="lblMaxNameCount" DockPanel.Dock="Right"/>
-                        <Slider x:Name="sliderNameCount" Minimum="0" Maximum="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding Text, ElementName=txtbox_NameCount, Mode=TwoWay}"/>
-                        <!--<Slider x:Name="sliderNameCount" Minimum="0" Maximum="{Binding Value, ElementName=MaxNameCount}" VerticalAlignment="Center" HorizontalAlignment="Stretch" TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding Text, ElementName=txtbox_NameCount, Mode=TwoWay}"/>-->
+                        <!--<Slider x:Name="sliderNameCount" 
+                                Minimum="0" 
+                                Maximum="0" 
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Stretch" 
+                                TickFrequency="1" 
+                                IsSnapToTickEnabled="True" 
+                                Value="{Binding Text, ElementName=txtbox_NameCount, Mode=TwoWay}"/>-->
+                        <Slider x:Name="sliderNameCount" 
+                        Minimum="0" Maximum="{Binding ElementName=MaxNameCount}" 
+                        VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                        TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding Text, ElementName=txtbox_NameCount, Mode=TwoWay}"/>
                     </DockPanel>
                 </StackPanel>
             </Border>
